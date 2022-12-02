@@ -8,7 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FeatureToggleApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(FeatureToggleApplication.class, args);
+
+//		@Bean(name=“entityManagerFactory”)
+//		public LocalSessionFactoryBean sessionFactory() {
+//			LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//			return sessionFactory;
+//		}
 	}
 
 }
