@@ -1,10 +1,16 @@
 package io.github.joaopugliesi.featuretoggle.entity;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "tb_user")
 public class User{
 
@@ -12,63 +18,23 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Column(name = "user_password",nullable = false)
     private String password;
-    @Column(nullable = false)
-    private Date dateCreated;
-    @Column(nullable = false)
+    @Column(name = "created", nullable = false)
+    private LocalDateTime dateCreated;
+    @Column()
     private Date dateUpdate;
 
     public User() {
 
     }
-    public User(Long id, String name, String password, Date dateCreated, Date dateUpdate) {
+    public User(Long id, String name, String password, LocalDateTime dateCreated, Date dateUpdate) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.dateCreated = dateCreated;
-        this.dateUpdate = dateUpdate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getDateUpdate() {
-        return dateUpdate;
-    }
-
-    public void setDateUpdate(Date dateUpdate) {
         this.dateUpdate = dateUpdate;
     }
 }
