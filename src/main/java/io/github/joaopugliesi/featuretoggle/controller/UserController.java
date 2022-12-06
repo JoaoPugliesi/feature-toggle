@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -27,5 +29,23 @@ public class UserController {
                                                 size = 10,
                                                  sort = "id") Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll(pageable));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<UserDto>> findByIs(@PathVariable Long id) {
+        Optional<UserDto> dto = service.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody UserDto dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserDto> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

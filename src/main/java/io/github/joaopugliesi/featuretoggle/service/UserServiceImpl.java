@@ -9,9 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
@@ -26,8 +27,29 @@ public class UserServiceImpl {
         return dto;
     }
 
+
     public Page<UserDto> findAll(Pageable pageable) {
         Page<User> list = repository.findAll(pageable);
         return list.map(x -> new UserDto(x));
+    }
+
+    public Optional<UserDto> findById(Long id) {
+        Optional<User> userOptional = repository.findById(id);
+        User entity = userOptional.get();
+        return Optional.of(new UserDto(entity));
+    }
+
+
+    public UserDto update(Long id, UserDto dto) {
+        Optional<User> userOptional = repository.findById(id);
+        User entity = new User();
+        entity.setName(dto.getName());
+        entity.setPassword(dto.getPassword());
+        repository.save(entity);
+        return new UserDto(entity);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }
