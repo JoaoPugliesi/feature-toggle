@@ -25,12 +25,12 @@ public class User{
     @Column(name = "created", nullable = false)
     private LocalDateTime dateCreated;
     @Column()
-    private Date dateUpdate;
+    private LocalDateTime dateUpdate;
 
     public User() {
 
     }
-    public User(Long id, String name, String password, LocalDateTime dateCreated, Date dateUpdate) {
+    public User(Long id, String name, String password, LocalDateTime dateCreated, LocalDateTime dateUpdate) {
         this.id = id;
         this.name = name;
         this.password = password;

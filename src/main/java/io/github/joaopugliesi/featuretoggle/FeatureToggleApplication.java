@@ -11,11 +11,6 @@ public class FeatureToggleApplication {
 
 		SpringApplication.run(FeatureToggleApplication.class, args);
 
-//		@Bean(name=“entityManagerFactory”)
-//		public LocalSessionFactoryBean sessionFactory() {
-//			LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//			return sessionFactory;
-//		}
 	}
 
 }

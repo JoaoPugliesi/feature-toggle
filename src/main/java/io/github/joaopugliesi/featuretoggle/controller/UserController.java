@@ -20,32 +20,37 @@ public class UserController {
     private UserServiceImpl service;
 
     @PostMapping
-    public ResponseEntity<UserDto> save(@RequestBody UserDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto save(@RequestBody UserDto dto) {
+        return service.save(dto);
     }
 
     @GetMapping
-    public ResponseEntity<Page<UserDto>> ListAll(@PageableDefault(page = 0,
+    @ResponseStatus(HttpStatus.OK)
+    public Page<UserDto> listAll(@PageableDefault(page = 0,
                                                 size = 10,
                                                  sort = "id") Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findAll(pageable));
+        return service.findAll(pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<UserDto>> findByIs(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<UserDto> findById(@PathVariable Long id) {
         Optional<UserDto> dto = service.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+        return dto;
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody UserDto dto) {
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto update(@PathVariable Long id, @RequestBody UserDto dto) {
         dto = service.update(id, dto);
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+        return dto;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserDto> delete(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return null;
     }
 }

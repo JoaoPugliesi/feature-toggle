@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
 
 
+    @Override
     public UserDto save(UserDto dto) {
         User entity = new User();
         entity.setName(dto.getName());
@@ -27,12 +28,12 @@ public class UserServiceImpl implements UserService {
         return dto;
     }
 
-
+    @Override
     public Page<UserDto> findAll(Pageable pageable) {
         Page<User> list = repository.findAll(pageable);
         return list.map(x -> new UserDto(x));
     }
-
+    @Override
     public Optional<UserDto> findById(Long id) {
         Optional<User> userOptional = repository.findById(id);
         User entity = userOptional.get();
@@ -45,10 +46,12 @@ public class UserServiceImpl implements UserService {
         User entity = new User();
         entity.setName(dto.getName());
         entity.setPassword(dto.getPassword());
+        entity.getDateCreated();
+        entity.setDateUpdate(LocalDateTime.now());
         repository.save(entity);
         return new UserDto(entity);
     }
-
+    @Override
     public void delete(Long id) {
         repository.deleteById(id);
     }
