@@ -2,22 +2,21 @@ package io.github.joaopugliesi.featuretoggle.controller;
 
 import io.github.joaopugliesi.featuretoggle.dto.UserDto;
 import io.github.joaopugliesi.featuretoggle.service.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserServiceImpl service;
+    private final UserServiceImpl service;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -28,8 +27,8 @@ public class UserController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<UserDto> listAll(@PageableDefault(page = 0,
-                                                size = 10,
-                                                 sort = "id") Pageable pageable) {
+            size = 10,
+            sort = "id") Pageable pageable) {
         return service.findAll(pageable);
     }
 

@@ -3,7 +3,7 @@ package io.github.joaopugliesi.featuretoggle.service;
 import io.github.joaopugliesi.featuretoggle.dto.UserDto;
 import io.github.joaopugliesi.featuretoggle.entity.User;
 import io.github.joaopugliesi.featuretoggle.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository repository;
-
+    private final UserRepository repository;
 
     @Override
     public UserDto save(UserDto dto) {
@@ -33,13 +31,13 @@ public class UserServiceImpl implements UserService {
         Page<User> list = repository.findAll(pageable);
         return list.map(x -> new UserDto(x));
     }
+
     @Override
     public Optional<UserDto> findById(Long id) {
         Optional<User> userOptional = repository.findById(id);
         User entity = userOptional.get();
         return Optional.of(new UserDto(entity));
     }
-
 
     public UserDto update(Long id, UserDto dto) {
         Optional<User> userOptional = repository.findById(id);
@@ -51,6 +49,7 @@ public class UserServiceImpl implements UserService {
         repository.save(entity);
         return new UserDto(entity);
     }
+
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
