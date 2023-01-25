@@ -4,6 +4,7 @@ import io.github.joaopugliesi.featuretoggle.dto.UserDto;
 import io.github.joaopugliesi.featuretoggle.entity.User;
 import io.github.joaopugliesi.featuretoggle.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto save(UserDto dto) {
-        User entity = new User();
+        User entity;
+        entity = User.fromDto(dto);
         entity.setName(dto.getName());
         entity.setPassword(dto.getPassword());
         entity.setDateCreated(LocalDateTime.now());
@@ -40,11 +42,14 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDto update(Long id, UserDto dto) {
-        Optional<User> userOptional = repository.findById(id);
-        User entity = new User();
-        entity.setName(dto.getName());
-        entity.setPassword(dto.getPassword());
-        entity.getDateCreated();
+        User entity = repository.findById(id).orElseThrow();
+        if (dto.getName() != null) {
+            entity.setName(dto.getName());
+        }
+
+        if (dto.getPassword() != null) {
+            entity.setPassword(dto.getPassword());
+        }
         entity.setDateUpdate(LocalDateTime.now());
         repository.save(entity);
         return new UserDto(entity);

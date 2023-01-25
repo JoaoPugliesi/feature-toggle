@@ -1,21 +1,21 @@
 package io.github.joaopugliesi.featuretoggle.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.github.joaopugliesi.featuretoggle.dto.UserDto;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "tb_user")
 public class User {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,4 +30,8 @@ public class User {
     @Column()
     private LocalDateTime dateUpdate;
 
+//    public static User fromDto(UserDto dto) {
+//        private String name;
+//        return User.builder().build();
+//    }
 }
